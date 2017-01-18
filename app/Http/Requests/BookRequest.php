@@ -2,7 +2,6 @@
 
 namespace App\Http\Requests;
 
-use App\Book;
 use Illuminate\Foundation\Http\FormRequest;
 
 class BookRequest extends FormRequest
