@@ -7,12 +7,13 @@
                 <div class="panel panel-default">
                     <div class="panel-heading">Novo Livro</div>
 
+
                     <div class="panel-body">
                         {!! Form::open(['route'=>'books.store', 'class' => 'form']) !!}
                         @include('books._form')
-                        <div class="form-group">
+                        {!! Html::openFormGroup() !!}
                             {!! Form::submit('Cadastrar Livro', ['class'=>'btn btn-primary']) !!}
-                        </div>
+                        {!! Html::closeFormGroup() !!}
                         {!! Form::close() !!}
                     </div>
                 </div>

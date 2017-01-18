@@ -11,7 +11,7 @@
                         {!! Form::model($category, ['route'=>['categories.update', 'category'=> $category->id], 'class' => 'form', 'method'=>'PUT']) !!}
                         @include('categories._form')
                         <div class="form-group">
-                            {!! Form::submit('Cadastrar Categoria', ['class'=>'btn btn-primary']) !!}
+                            {!! Form::submit('Atualizar Categoria', ['class'=>'btn btn-primary']) !!}
                         </div>
                         {!! Form::close() !!}
                     </div>

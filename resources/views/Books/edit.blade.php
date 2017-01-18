@@ -10,9 +10,9 @@
                     <div class="panel-body">
                         {!! Form::model($book, ['route'=>['books.update', 'book'=> $book->id], 'class' => 'form', 'method'=>'PUT']) !!}
                         @include('books._form')
-                        <div class="form-group">
+                        {!! Html::openFormGroup() !!}
                             {!! Form::submit('Cadastrar Livro', ['class'=>'btn btn-primary']) !!}
-                        </div>
+                        {!! Html::closeFormGroup() !!}
                         {!! Form::close() !!}
                     </div>
                 </div>

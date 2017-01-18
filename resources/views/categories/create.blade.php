@@ -6,13 +6,12 @@
             <div class="col-md-8 col-md-offset-2">
                 <div class="panel panel-default">
                     <div class="panel-heading">Nova Categoria</div>
-
                     <div class="panel-body">
                         {!! Form::open(['route'=>'categories.store', 'class' => 'form']) !!}
-                        @include('categories._form')
-                        <div class="form-group">
-                            {!! Form::submit('Cadastrar Categoria', ['class'=>'btn btn-primary']) !!}
-                        </div>
+                            @include('categories._form')
+                            {!! Html::openFormGroup() !!}
+                                {!! Form::submit('Cadastrar Categoria', ['class'=>'btn btn-primary']) !!}
+                            {!! Html::closeFormGroup() !!}
                         {!! Form::close() !!}
                     </div>
                 </div>

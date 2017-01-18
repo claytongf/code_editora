@@ -7,6 +7,7 @@
                 <div class="panel panel-default">
                     <div class="panel-heading">Categorias</div>
                     <div class="panel-body table-category">
+                        <a href="{{ route('categories.create') }}" class="btn btn-primary">Criar Categoria</a>
                         <table class="table table-bordered table-responsive" id="table-categories">
                             <thead>
                             <tr>

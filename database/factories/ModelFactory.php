@@ -34,5 +34,7 @@ $factory->define(App\Book::class, function (Faker\Generator $faker) {
         'title' => ucfirst($faker->unique()->word),
         'subtitle' => ucfirst($faker->unique()->word),
         'price' => rand(0,200).'.'.rand(0,99),
+        'cat_id' => rand(1,50),
+        'author_id' => rand(1,21)
     ];
 });
