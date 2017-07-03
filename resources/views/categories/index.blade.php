@@ -1,48 +1,33 @@
 @extends('layouts.app')
 
 @section('content')
-    <div class="container-fluid">
+    <div class="container">
         <div class="row">
-            <div class="col-sm-10 col-sm-offset-1">
-                <div class="panel panel-default">
-                    <div class="panel-heading">Categorias</div>
-                    <div class="panel-body table-category">
-                        <a href="{{ route('categories.create') }}" class="btn btn-primary">Criar Categoria</a>
-                        <table class="table table-bordered table-responsive" id="table-categories">
-                            <thead>
-                            <tr>
-                                <th>ID</th>
-                                <th>Nome</th>
-                                <th>Ações</th>
-                            </tr>
-                            </thead>
-                            <tbody>
-                            @foreach($categories as $category)
-                                <tr>
-                                    <td>{{$category->id}}</td>
-                                    <td>{{$category->name}}</td>
-                                    <td>
-                                        <ul>
-                                            <li><a href="{{ route('categories.edit', ['category'=>$category->id]) }}">Editar</a></li>
-                                            <li>
-                                                <?php $deleteForm = "delete-form-{$loop->index}" ?>
-                                                <a href="{{ route('categories.destroy', ['category'=>$category->id]) }}"
-                                                onclick="event.preventDefault();document.getElementById('{{$deleteForm}}').submit();">Excluir</a>
-                                                {!! Form::open(['route'=>['categories.destroy', $category->id], 'method' => 'DELETE', 'id'=>$deleteForm, 'style' => 'display:none']) !!}
-                                                {!! Form::close() !!}
-                                            </li>
-                                        </ul>
-                                    </td>
-                                </tr>
-                            @endforeach
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-            </div>
-            <div class="col-sm-11 col-sm-offset-1">
-                {{ $categories->links() }}
-            </div>
+            <h3>Lista de Categorias</h3>
+            {!! Button::primary('Nova Categoria')->asLinkTo(route('categories.create')) !!}
+        </div>
+        <div class="row">
+            {!!
+                Table::withContents($categories->items())->striped()
+                 ->callback('Ações', function($field, $category){
+                    $linkEdit = route('categories.edit', ['category'=>$category->id]);
+                    $linkDestroy = route('categories.destroy', ['category'=>$category->id]);
+                    $deleteForm = "delete-form-{$category->id}";
+                    $form = Form::open(['route'=>['categories.destroy', 'category'=> $category->id], 'method' => 'DELETE', 'id'=>$deleteForm, 'style' => 'display:none']).Form::close();
+                    $anchorDestroy = Button::link('Excluir')->asLinkTo($linkDestroy)->addAttributes([
+                        'onclick' => "event.preventDefault();document.getElementById(\"{$deleteForm}\").submit();"
+                    ]);
+                    return "<ul class=\"list-inline\">".
+                            "<li>".Button::link('Edit')->asLinkTo($linkEdit)."</li>".
+                            "<li>|</li>".
+                            "<li>".$anchorDestroy."</li>".
+                            "</ul>".
+                            $form;
+                 })
+            !!}
+        </div>
+        <div class="col-sm-11 col-sm-offset-1">
+            {{ $categories->links() }}
         </div>
     </div>
 @endsection

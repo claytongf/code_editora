@@ -10,7 +10,7 @@
                         {!! Form::open(['route'=>'categories.store', 'class' => 'form']) !!}
                             @include('categories._form')
                             {!! Html::openFormGroup() !!}
-                                {!! Form::submit('Cadastrar Categoria', ['class'=>'btn btn-primary']) !!}
+                                {!! Button::primary('Criar Categoria')->submit() !!}
                             {!! Html::closeFormGroup() !!}
                         {!! Form::close() !!}
                     </div>
