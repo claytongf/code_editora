@@ -23,13 +23,13 @@ $factory->define(App\User::class, function (Faker\Generator $faker) {
     ];
 });
 
-$factory->define(App\Category::class, function (Faker\Generator $faker) {
+$factory->define(App\Models\Category::class, function (Faker\Generator $faker) {
     return [
         'name' => ucfirst($faker->unique()->word),
     ];
 });
 
-$factory->define(App\Book::class, function (Faker\Generator $faker) {
+$factory->define(App\Models\Book::class, function (Faker\Generator $faker) {
     return [
         'title' => ucfirst($faker->unique()->word),
         'subtitle' => ucfirst($faker->unique()->word),

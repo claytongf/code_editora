@@ -1,18 +1,21 @@
 <?php
 
-namespace App;
+namespace App\Models;
 
-use Bootstrapper\Interfaces\TableInterface;
 use Illuminate\Database\Eloquent\Model;
+use Prettus\Repository\Contracts\Transformable;
+use Prettus\Repository\Traits\TransformableTrait;
 
-class Category extends Model implements TableInterface
+class Category extends Model implements Transformable
 {
+    use TransformableTrait;
+
     protected $fillable = [
         'name'
     ];
 
     public function Books(){
-        return $this->hasMany('App\Book');
+        return $this->hasMany('App\Models\Book');
     }
 
     /**
@@ -42,4 +45,5 @@ class Category extends Model implements TableInterface
         }
         return $this->$header;
     }
+
 }

@@ -1,6 +1,6 @@
 <?php
 
-namespace App;
+namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
@@ -15,7 +15,7 @@ class Book extends Model
     ];
 
     public function Category(){
-        return $this->belongsTo('App\Category', 'cat_id');
+        return $this->belongsTo('App\Models\Category', 'cat_id');
     }
 
     public function Author(){
