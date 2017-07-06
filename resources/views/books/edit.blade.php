@@ -11,7 +11,7 @@
                         {!! Form::model($book, ['route'=>['books.update', 'book'=> $book->id], 'class' => 'form', 'method'=>'PUT']) !!}
                         @include('books._form')
                         {!! Html::openFormGroup() !!}
-                            {!! Form::submit('Cadastrar Livro', ['class'=>'btn btn-primary']) !!}
+                            {!! Button::primary("Salvar livro")->submit() !!}
                         {!! Html::closeFormGroup() !!}
                         {!! Form::close() !!}
                     </div>

@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Providers;
+namespace CodePub\Providers;
 
 use Illuminate\Support\ServiceProvider;
 
@@ -23,7 +23,9 @@ class RepositoryServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        $this->app->bind(\App\Repositories\CategoryRepository::class, \App\Repositories\CategoryRepositoryEloquent::class);
+        $this->app->bind(\CodePub\Repositories\CategoryRepository::class, \CodePub\Repositories\CategoryRepositoryEloquent::class);
+        $this->app->bind(\CodePub\Repositories\BookRepository::class, \CodePub\Repositories\BookRepositoryEloquent::class);
+        $this->app->bind(\CodePub\Repositories\UserRepository::class, \CodePub\Repositories\UserRepositoryEloquent::class);
         //:end-bindings:
     }
 }

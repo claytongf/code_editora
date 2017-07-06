@@ -1,22 +1,40 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace CodePub\Http\Controllers;
 
-use App\Models\Book;
-use App\Http\Requests\BookRequest;
+use CodePub\Http\Requests\BookUpdateRequest;
+use CodePub\Http\Requests\BookCreateRequest;
+use CodePub\Repositories\BookRepository;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class BooksController extends Controller
 {
     /**
+     * @var BookRepository
+     */
+    private $repository;
+
+    /**
+     * BooksController constructor.
+     * @param BookRepository $repository
+     */
+    public function __construct(BookRepository $repository)
+    {
+        $this->repository = $repository;
+    }
+
+    /**
      * Display a listing of the resource.
      *
+     * @param Request $request
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $books = Book::query()->paginate(15);
-        return view('books.index', compact('books'));
+        $search = $request->get('search');
+        $books = $this->repository->paginate(15);
+        return view('books.index', compact('books', 'search'));
     }
 
     /**
@@ -32,12 +50,14 @@ class BooksController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \App\Http\Requests\BookRequest  $request
+     * @param  \CodePub\Http\Requests\BookCreateRequest  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(BookRequest $request)
+    public function store(BookCreateRequest $request)
     {
-        Book::create($request->all());
+        $data = $request->all();
+        $data['author_id'] = Auth::user()->id;
+        $this->repository->create($data);
         $url = $request->get('redirect_to', route('books.index'));
         $request->session()->flash('message', 'Livro cadastrado com sucesso.');
         return redirect()->to($url);
@@ -46,27 +66,30 @@ class BooksController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param Book $book
+     * @param $id
      * @return \Illuminate\Http\Response
+     * @internal param Book $book
      * @internal param int $id
      */
-    public function edit(Book $book)
+    public function edit($id)
     {
+        $book = $this->repository->find($id);
         return view('books.edit', compact('book'));
     }
 
     /**
      * Update the specified resource in storage.
      *
-     * @param  \App\Http\Requests\BookRequest $request
-     * @param Book $book
+     * @param  \CodePub\Http\Requests\BookUpdateRequest $request
+     * @param $id
      * @return \Illuminate\Http\Response
+     * @internal param Book $book
      * @internal param int $id
      */
-    public function update(BookRequest $request, Book $book)
+    public function update(BookUpdateRequest $request, $id)
     {
-        $book->fill($request->all());
-        $book->save();
+        $data = $request->except(['author_id']);
+        $this->repository->update($data, $id);
         $url = $request->get('redirect_to', route('books.index'));
         $request->session()->flash('message', 'Livro alterado com sucesso.');
         return redirect()->to($url);
@@ -75,13 +98,15 @@ class BooksController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param Book $book
+     * @param $id
      * @return \Illuminate\Http\Response
+     * @internal param Book $book
      * @internal param int $id
      */
-    public function destroy(Book $book)
+    public function destroy($id)
     {
-        $book->delete();
+        $this->repository->delete($id);
+        \Session::flash('message', 'Livro excluído com sucesso.');
         return redirect()->route('books.index');
     }
 }

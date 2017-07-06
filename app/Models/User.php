@@ -1,6 +1,6 @@
 <?php
 
-namespace App;
+namespace CodePub\Models;
 
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -28,6 +28,6 @@ class User extends Authenticatable
     ];
 
     public function Books(){
-        return $this->hasMany('App\Models\Books');
+        return $this->hasMany('CodePub\Models\Book');
     }
 }

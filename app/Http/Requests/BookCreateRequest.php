@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Requests;
+namespace CodePub\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class BookRequest extends FormRequest
+class BookCreateRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -13,9 +13,7 @@ class BookRequest extends FormRequest
      */
     public function authorize()
     {
-        $book = $this->route('book');
-        $id = $book ? $book->author_id : null;
-        return $this->user()->id == $id;
+        return true;
     }
 
     /**

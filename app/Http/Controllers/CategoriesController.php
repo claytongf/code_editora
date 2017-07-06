@@ -1,9 +1,9 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace CodePub\Http\Controllers;
 
-use App\Http\Requests\CategoryRequest;
-use App\Repositories\CategoryRepository;
+use CodePub\Http\Requests\CategoryRequest;
+use CodePub\Repositories\CategoryRepository;
 use Illuminate\Http\Request;
 
 class CategoriesController extends Controller
@@ -25,12 +25,14 @@ class CategoriesController extends Controller
     /**
      * Display a listing of the resource.
      *
+     * @param Request $request
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
+        $search = $request->get('search');
         $categories = $this->repository->paginate(15);
-        return view('categories.index', compact('categories'));
+        return view('categories.index', compact('categories', 'search'));
     }
 
     /**
@@ -46,7 +48,7 @@ class CategoriesController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \App\Http\Requests\CategoryRequest $request
+     * @param  \CodePub\Http\Requests\CategoryRequest $request
      * @return \Illuminate\Http\Response
      */
     public function store(CategoryRequest $request)
@@ -74,7 +76,7 @@ class CategoriesController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \App\Http\Requests\CategoryRequest $request
+     * @param  \CodePub\Http\Requests\CategoryRequest $request
      * @param $id
      * @return \Illuminate\Http\Response
      * @internal param Category $category

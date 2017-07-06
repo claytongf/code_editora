@@ -7,6 +7,14 @@
             {!! Button::primary('Nova Categoria')->asLinkTo(route('categories.create')) !!}
         </div>
         <div class="row">
+            {!! Form::model(compact('search'), ['class' => 'form-inline', 'method'=>'GET']) !!}
+            {!!Form::label('search', 'Pesquisar por nome:', ['class'=>'control-label'])!!}
+            {!!Form::text('search', null, ['class' => 'form-control', 'id' => 'searchForm'])!!}
+            {!! Form::hidden('_data', route('categories.index')) !!}
+            {!! Button::primary("Buscar")->submit() !!}
+            {!! Form::close() !!}
+        </div>
+        <div class="row">
             {!!
                 Table::withContents($categories->items())->striped()
                  ->callback('Ações', function($field, $category){
@@ -18,7 +26,7 @@
                         'onclick' => "event.preventDefault();document.getElementById(\"{$deleteForm}\").submit();"
                     ]);
                     return "<ul class=\"list-inline\">".
-                            "<li>".Button::link('Edit')->asLinkTo($linkEdit)."</li>".
+                            "<li>".Button::link('Editar')->asLinkTo($linkEdit)."</li>".
                             "<li>|</li>".
                             "<li>".$anchorDestroy."</li>".
                             "</ul>".

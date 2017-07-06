@@ -1,6 +1,6 @@
 <?php
 
-use App\User;
+use CodePub\Models\User;
 use Illuminate\Database\Seeder;
 
 class UsersTableSeeder extends Seeder
@@ -14,6 +14,9 @@ class UsersTableSeeder extends Seeder
     {
         factory(User::class,1)->create([
             'email' => 'admin@user.com'
+        ]);
+        factory(User::class,1)->create([
+            'email' => 'admin1@user.com'
         ]);
         factory(User::class,20)->create();
     }
