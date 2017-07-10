@@ -83,7 +83,7 @@ class BooksController extends Controller
     {
         $book = $this->repository->find($id);
         $this->categoryRepository->withTrashed();
-        $categories = $this->categoryRepository->listsWithMutators('name', 'id'); //pluck
+        $categories = $this->categoryRepository->listsWithMutators('name_trashed', 'id'); //pluck
         return view('books.edit', compact('book', 'categories'));
     }
 

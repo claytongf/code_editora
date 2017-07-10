@@ -19,7 +19,8 @@ class BookRepositoryEloquent extends BaseRepository implements BookRepository
     use RepositoryRestoreTrait;
 
     protected $fieldSearchable = [
-        'title' => 'like'
+        'title' => 'like',
+        'categories.title' => 'like'
     ];
 
     public function create(array $attributes)

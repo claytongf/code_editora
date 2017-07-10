@@ -22,7 +22,7 @@ class Book extends Model implements TableInterface
     ];
 
     public function categories(){
-        return $this->belongsToMany('CodePub\Models\Category');
+        return $this->belongsToMany('CodePub\Models\Category')->withTrashed();
     }
 
     public function author(){
