@@ -4,19 +4,28 @@ namespace CodePub\Models;
 
 use Bootstrapper\Interfaces\TableInterface;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Prettus\Repository\Contracts\Transformable;
 use Prettus\Repository\Traits\TransformableTrait;
 
 class Category extends Model implements Transformable, TableInterface
 {
     use TransformableTrait;
+    use SoftDeletes;
+
+    protected $dates = ['deleted_at'];
 
     protected $fillable = [
         'name'
     ];
 
-    public function Books(){
-        return $this->hasMany('CodePub\Models\Book');
+    public function books()
+    {
+        return $this->belongsToMany('CodePub\Models\Book');
+    }
+
+    public function getNameTrashedAttribute(){
+        return $this->trashed() ? "{$this->name} (Inativa)" : $this->name;
     }
 
     /**
@@ -38,7 +47,7 @@ class Category extends Model implements Transformable, TableInterface
      */
     public function getValueForHeader($header)
     {
-        switch ($header){
+        switch ($header) {
             case 'ID':
                 return $this->id;
             case 'Nome':

@@ -17,11 +17,11 @@
             {!!
                 Table::withContents($books->items())->striped()
                  ->callback('Ações', function($field, $book){
-                    $linkEdit = route('books.edit', ['category'=>$book->id]);
-                    $linkDestroy = route('books.destroy', ['category'=>$book->id]);
+                    $linkEdit = route('books.edit', ['book'=>$book->id]);
+                    $linkDestroy = route('books.destroy', ['book'=>$book->id]);
                     $deleteForm = "delete-form-{$book->id}";
-                    $form = Form::open(['route'=>['books.destroy', 'category'=> $book->id], 'method' => 'DELETE', 'id'=>$deleteForm, 'style' => 'display:none']).Form::close();
-                    $anchorDestroy = Button::link('Excluir')->asLinkTo($linkDestroy)->addAttributes([
+                    $form = Form::open(['route'=>['books.destroy', 'book'=> $book->id], 'method' => 'DELETE', 'id'=>$deleteForm, 'style' => 'display:none']).Form::close();
+                    $anchorDestroy = Button::link('Mover Para Lixeira')->asLinkTo($linkDestroy)->addAttributes([
                         'onclick' => "event.preventDefault();document.getElementById(\"{$deleteForm}\").submit();"
                     ]);
                     return "<ul class=\"list-inline\">".

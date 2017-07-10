@@ -5,6 +5,7 @@ namespace CodePub\Http\Controllers;
 use CodePub\Http\Requests\BookUpdateRequest;
 use CodePub\Http\Requests\BookCreateRequest;
 use CodePub\Repositories\BookRepository;
+use CodePub\Repositories\CategoryRepository;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -14,14 +15,20 @@ class BooksController extends Controller
      * @var BookRepository
      */
     private $repository;
+    /**
+     * @var CategoryRepository
+     */
+    private $categoryRepository;
 
     /**
      * BooksController constructor.
      * @param BookRepository $repository
+     * @param CategoryRepository $categoryRepository
      */
-    public function __construct(BookRepository $repository)
+    public function __construct(BookRepository $repository, CategoryRepository $categoryRepository)
     {
         $this->repository = $repository;
+        $this->categoryRepository = $categoryRepository;
     }
 
     /**
@@ -44,13 +51,14 @@ class BooksController extends Controller
      */
     public function create()
     {
-        return view('books.create');
+        $categories = $this->categoryRepository->lists('name', 'id'); //pluck
+        return view('books.create', compact('categories'));
     }
 
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \CodePub\Http\Requests\BookCreateRequest  $request
+     * @param  \CodePub\Http\Requests\BookCreateRequest $request
      * @return \Illuminate\Http\Response
      */
     public function store(BookCreateRequest $request)
@@ -74,7 +82,9 @@ class BooksController extends Controller
     public function edit($id)
     {
         $book = $this->repository->find($id);
-        return view('books.edit', compact('book'));
+        $this->categoryRepository->withTrashed();
+        $categories = $this->categoryRepository->listsWithMutators('name', 'id'); //pluck
+        return view('books.edit', compact('book', 'categories'));
     }
 
     /**
